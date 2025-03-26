@@ -39,6 +39,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
   void initState() {
     super.initState();
     BlocProvider.of<ProductBloc>(context).add(LoadProducts(currentPage));
+    BlocProvider.of<CartBloc>(context).add(LoadProductsEvent()); // Dispatch LoadProductsEvent
+    BlocProvider.of<CartBloc>(context).add(LoadProductsEvent()); // Dispatch LoadProductsEvent
   }
 
   @override

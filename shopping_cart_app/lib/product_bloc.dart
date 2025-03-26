@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'product_repository.dart';
+import 'product_event_handler.dart';
 
 class ProductEvent {
   final int page;
@@ -24,18 +25,12 @@ class ProductLoaded extends ProductState {
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final ProductRepository productRepository;
 
-  ProductBloc(this.productRepository) : super(ProductLoading());
+  ProductBloc(this.productRepository) : super(ProductLoading()) {
+    ProductEventHandler.registerHandlers(this);
+  }
 
   @override
   Stream<ProductState> mapEventToState(ProductEvent event) async* {
-    if (event is LoadProducts) {
-      yield ProductLoading();
-      try {
-        final products = await productRepository.fetchProducts(event.page);
-        yield ProductLoaded(products);
-      } catch (_) {
-        yield ProductState(); // Handle error state
-      }
-    }
+    // The event handling is now managed in the ProductEventHandler
   }
 }
